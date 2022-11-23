@@ -1,39 +1,24 @@
 <template>
-  <div v-if="isAuthenticated" class="home">
+  <div class="home">
     <SideBar />
     <div :style="{ 'margin-left': sidebarWidth }">
       <BodyComponent />
     </div>
   </div>
-  <LoginPage v-else />
 </template>
 <script>
 // @ is an alias to /src
+import SideBar from "@/components/SideBar.vue";
 import { sidebarWidth, loggedIn } from "@/components/state";
 import BodyComponent from "@/components/BodyComponent.vue";
-import SideBar from "@/components/SideBar.vue";
-import LoginPage from "@/views/LoginPage.vue";
-
 export default {
   name: "HomeView",
+  components: {
+    SideBar,
+    BodyComponent,
+  },
   setup() {
     return { sidebarWidth, loggedIn };
-  },
-  computed: {
-    isAuthenticated() {
-      if (localStorage.getItem("isAuthenticated") == "true") {
-        return true;
-      }
-      return this.$store.state.isAuthenticated;
-    },
-  },
-  created() {
-    localStorage.removeItem("isAuthenticated");
-  },
-  components: {
-    BodyComponent,
-    SideBar,
-    LoginPage,
   },
 };
 </script>

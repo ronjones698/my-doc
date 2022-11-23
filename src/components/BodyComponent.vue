@@ -10,10 +10,10 @@
           </div>
         </div>
         <div class="profile">
-          <font-awesome-icon class="icons" icon="fa-regular fa-bell" />
-          <font-awesome-icon class="icons" icon="fa-regular fa-envelope" />
-          <h4>details</h4>
-          <h4>mail</h4>
+          <div class="detail">
+            <h3>{{ first_name }} {{ second_name }}</h3>
+            <p @click="logOut">Sign-Out</p>
+          </div>
         </div>
       </div>
     </nav>
@@ -23,17 +23,40 @@
 <script>
 // @ is an alias to /src
 export default {
-  name: "HomeView",
+  name: "BodyComponent",
   components: {},
+  computed: {
+    first_name() {
+      return this.$store.state.authenticatedUser.first_name;
+    },
+    second_name() {
+      return this.$store.state.authenticatedUser.second_name;
+    },
+    image_url() {
+      return this.$store.state.authenticatedUser.imageUrl;
+    },
+  },
+  methods: {
+    logOut() {
+      localStorage.setItem("isAuthenticated", false);
+      this.$store.commit("setAuthenticated", false);
+      window.location.reload();
+    },
+  },
 };
 </script>
 <style scoped>
 .home {
-  display: flex;
-  justify-content: space-between;
   transition: 0.3s ease-in;
+  display: flex;
+  flex-direction: column;
 }
 nav {
+  width: 100%;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
 }
 input {
@@ -47,7 +70,7 @@ input {
   text-align: center;
 }
 .searchbox {
-  width: 60%;
+  width: 100%;
   display: flex;
   align-items: center;
   margin-left: 10%;
@@ -67,5 +90,32 @@ input {
   color: white;
   font-size: 16px;
   align-self: center;
+}
+img {
+  height: 6%;
+  width: 10%;
+  padding: 10px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 150px;
+}
+h3 {
+  color: #2f855a;
+  padding: 5px;
+  height: 30px;
+  font-weight: 600;
+}
+p {
+  color: grey;
+  cursor: pointer;
+  padding-left: 5px;
+}
+.profile {
+  justify-content: flex-end;
 }
 </style>
