@@ -2,7 +2,7 @@
 node_modules
 /dist
 /backend
-
+access.txt
 # local env files
 .env.local
 .env.*.local
